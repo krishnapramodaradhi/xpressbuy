@@ -1,0 +1,59 @@
+.navbar {
+    display: grid;
+    grid-template-columns: 200px 1fr 100px;
+    align-items: center;
+    height: 4rem;
+    background-color: white;
+    padding-inline: 2rem;
+}
+
+.navbar > div:nth-child(1) > a {
+    font-size: 2rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.navbar > div:nth-child(1) > a > span:last-child {
+    color: var(--accent-clr);
+}
+
+.navbar > div:nth-child(2) {
+    width: 70%;
+    justify-self: center;
+    padding: .25rem;
+    background-color: var(--background-accent-clr);
+    border-radius: 5px;
+
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    place-items: center;
+}
+
+.navbar > div:nth-child(2):focus-within {
+    border-color: var(--accent-clr);
+    outline: 1px solid var(--accent-clr);
+    background-color: white;
+    box-shadow: 0 2px 8px #00000033;
+}
+
+.navbar > div:nth-child(2) > input {
+    width: 100%;
+    border: 0;
+    padding: .25rem .5rem;
+    background-color: var(--background-accent-clr);
+}
+
+.navbar > div:nth-child(2) > input:focus {
+    outline: 0;
+    background-color: white;
+}
+
+.navbar > ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: end;
+    gap: 1rem;
+}
+
+.navbar > ul svg {
+    font-size: 1.25rem;;
+}
