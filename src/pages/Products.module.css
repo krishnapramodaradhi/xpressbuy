@@ -5,10 +5,12 @@
   }
   
   .productsContainer > section:nth-child(1) {
-    border: 1px solid #ccc;
     height: fit-content;
     padding-inline: 1rem;
     padding-bottom: 1rem;
+    box-shadow: 0 2px 8px #00000033;
+    border-radius: 5px;
+    background-color: white;
   }
   
   .productsContainer > section:nth-child(1) > h3 {
@@ -25,21 +27,19 @@
   
   .cardContainer {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
   }
   
   .card {
     box-shadow: 0 2px 8px #00000033;
     background-color: white;
-  }
-  
-  .card > div:nth-child(1) {
+    border-radius: 5px;
     overflow: hidden;
   }
   
   .card > div:nth-child(1) > img {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / .75;
     object-fit: cover;
   }
   
