@@ -103,4 +103,5 @@ textarea:not([rows]) {
 
 main {
   padding-inline: 2rem;
+  margin-top: 1rem;
 }
