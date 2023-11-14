@@ -1,69 +1,14 @@
 .productsContainer {
-    display: grid;
-    grid-template-columns: 200px 1fr 150px;
-    gap: 1rem;
-  }
-  
-  .productsContainer > section:nth-child(1) {
-    height: fit-content;
-    padding-inline: 1rem;
-    padding-bottom: 1rem;
-    box-shadow: 0 2px 8px #00000033;
-    border-radius: 5px;
-    background-color: white;
-  }
-  
-  .productsContainer > section:nth-child(1) > h3 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .productsContainer > section:nth-child(1) > ul {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-  }
-  
-  .cardContainer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-  
-  .card {
-    box-shadow: 0 2px 8px #00000033;
-    background-color: white;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  .card > div:nth-child(1) > img {
-    aspect-ratio: 1 / .75;
-    object-fit: cover;
-  }
-  
-  .card > div:nth-child(2) {
-    padding-inline: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .card > div:nth-child(2) > h3 {
-    font-size: 1rem;
-  }
-  
-  .card > div:nth-child(2) > p {
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
-    color: var(--accent-clr);
-  }
-  
-  .productsContainer > section:nth-child(3) {
-    height: fit-content;
-    font-size: 0.8rem;
-  }
-  
-  .productsContainer > section:nth-child(3) > h3 {
-    margin: 0 0 .5rem 0;
-  }
-  
+  display: grid;
+  grid-template-columns: 200px 1fr 150px;
+  gap: 1rem;
+}
+
+.productsContainer > section:nth-child(3) {
+  height: fit-content;
+  font-size: 0.8rem;
+}
+
+.productsContainer > section:nth-child(3) > h3 {
+  margin: 0 0 0.5rem 0;
+}

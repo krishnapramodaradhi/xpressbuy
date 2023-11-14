@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.container > span {
+  border: 1px solid var(--accent-clr);
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: max-content;
+  display: grid;
+  grid-auto-flow: column;
+  justify-items: start;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.container > span > span:last-child {
+  display: flex;
+  align-items: center;
+  rotate: 45deg;
+  cursor: pointer;
+}

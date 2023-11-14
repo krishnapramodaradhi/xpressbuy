@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
+
 const NavListItem = (props) => {
   return (
     <li>
-      <a href={props.href} title={props.title}>
+      <Link to={props.href} title={props.title}>
         {props.children}
-      </a>
+      </Link>
     </li>
   );
 };

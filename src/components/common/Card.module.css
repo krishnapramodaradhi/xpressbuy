@@ -1,0 +1,26 @@
+.card {
+  box-shadow: 0 2px 8px #00000033;
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.card > div:nth-child(1) > img {
+  aspect-ratio: 1 / 0.75;
+  object-fit: cover;
+}
+
+.card > div:nth-child(2) {
+  padding-inline: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card > div:nth-child(2) > h3 {
+  font-size: 1rem;
+}
+
+.card > div:nth-child(2) > p {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  color: var(--accent-clr);
+}

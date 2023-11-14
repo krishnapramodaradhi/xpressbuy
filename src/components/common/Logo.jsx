@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
+
 const Logo = () => {
   return (
-    <a href='/'>
+    <Link to='/'>
       <span>xpress</span>
       <span>buy</span>
-    </a>
+    </Link>
   );
 };
 
