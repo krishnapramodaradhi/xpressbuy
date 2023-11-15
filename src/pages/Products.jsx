@@ -3,11 +3,12 @@ import { db } from '../config/db';
 import styles from './Products.module.css';
 import Categories from '../components/products/Categories';
 import ProductsGrid from '../components/products/ProductsGrid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CategoryFilter from '../components/products/CategoryFilter';
+import { useSearchParams } from 'react-router-dom';
 
 const ProductsPage = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [ searchParams, setSearchParams ] = useSearchParams();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const { isPending: loadingProducts, data: fetchedProducts } = useQuery({
     queryKey: ['products'],
@@ -34,17 +35,47 @@ const ProductsPage = () => {
     },
   });
 
-  const categorySelectHandler = (category) => {
-    if (selectedCategories.includes(category)) return;
-    setSelectedCategories([...selectedCategories, category]);
+  const setFilteredProductsByCategory = (category) => {
     const filteredProductsByCategory = fetchedProducts.filter(
       (p) => p.category.categoryName === category
     );
     setFilteredProducts([...filteredProducts, ...filteredProductsByCategory]);
+  }
+
+  useEffect(() => {
+    const categories = searchParams.get('categories');
+    if (categories && fetchedProducts) {
+      setFilteredProducts(
+        fetchedProducts.filter(p => categories.split(',').includes(p.category.categoryName))
+      )
+    }
+  }, [fetchedProducts])
+
+  const categorySelectHandler = (category) => {
+    setSearchParams((prevParams) => {
+      let categories = prevParams.get('categories');
+      if (!categories) {
+        prevParams.set('categories', category)
+        setFilteredProductsByCategory(category)
+        return prevParams;
+      } else if (categories && categories.includes(category)) {
+        return prevParams;
+      } else {
+        setFilteredProductsByCategory(category)
+        categories = categories + ',' + category
+        prevParams.set('categories', categories);
+        return prevParams
+      }
+    })
   };
 
   const removeCategoryFilterHandler = (category) => {
-    setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    setSearchParams(prevParams => {
+      let categories = searchParams.get('categories');
+      categories = categories.split(',').filter(cat => cat !== category).join(',')
+      prevParams.set('categories', categories);
+      return prevParams;
+    })
     setFilteredProducts(
       filteredProducts.filter((p) => p.category.categoryName !== category)
     );
@@ -59,7 +90,7 @@ const ProductsPage = () => {
       />
       <section>
         <CategoryFilter
-          selectedCategories={selectedCategories}
+          selectedCategories={searchParams.get('categories')}
           onRemoveCategoryFilter={removeCategoryFilterHandler}
         />
         <ProductsGrid loading={loadingProducts} products={products} />

@@ -5,9 +5,9 @@ import { Fragment } from 'react';
 const CategoryFilter = ({ selectedCategories, onRemoveCategoryFilter }) => {
   return (
     <Fragment>
-      {selectedCategories && !!selectedCategories.length && (
+      {selectedCategories && !!selectedCategories.split(',').length && (
         <div className={styles.container}>
-          {selectedCategories.map((cat) => (
+          {selectedCategories.split(',').map((cat) => (
             <span key={cat}>
               <span>{cat}</span>
               <span onClick={onRemoveCategoryFilter.bind(null, cat)}>
