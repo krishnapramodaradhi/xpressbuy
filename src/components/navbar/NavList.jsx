@@ -1,11 +1,18 @@
-import { FaUser, FaRegHeart, FaCartShopping } from 'react-icons/fa6';
+import {
+  FaUser,
+  FaRegHeart,
+  FaCartShopping,
+  FaArrowRightFromBracket,
+} from 'react-icons/fa6';
 import NavListItem from './NavListItem';
+import { Fragment } from 'react';
+import { db } from '../../config/db';
 
-const NavList = () => {
+const NavList = ({ user }) => {
   const navListItems = [
     {
-      href: '/signup',
-      title: 'Signup',
+      href: user ? '/profile' : '/signup',
+      title: user ? 'Profile' : 'Signup',
       Icon: FaUser,
     },
     {
@@ -19,13 +26,24 @@ const NavList = () => {
       Icon: FaCartShopping,
     },
   ];
+
+  const logoutHandler = async () => {
+    await db.auth.signOut();
+  }
   return (
     <ul role='list'>
       {navListItems.map((listItem) => (
-        <NavListItem key={listItem.href} href={listItem.href} title={listItem.title}>
-          <listItem.Icon />
-        </NavListItem>
+        <Fragment key={listItem.href}>
+          <NavListItem href={listItem.href} title={listItem.title}>
+            <listItem.Icon />
+          </NavListItem>
+        </Fragment>
       ))}
+      {user && (
+        <NavListItem title='Logout' onClick={logoutHandler}>
+          <FaArrowRightFromBracket />
+        </NavListItem>
+      )}
     </ul>
   );
 };

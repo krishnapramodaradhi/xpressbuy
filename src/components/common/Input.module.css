@@ -1,0 +1,35 @@
+fieldset {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0;
+}
+
+fieldset > label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+fieldset > input {
+  padding-block: 0.5rem;
+  border: 0;
+  outline: 1px solid gray;
+  font-size: 14px;
+}
+
+fieldset > input:focus {
+  outline: 1px solid black;
+  box-shadow: 0 2px 4px #00000033;
+  border: 0;
+}
+
+fieldset > span {
+  color: red;
+  font-size: 12px;
+  display: none;
+}
+
+input:invalid[focused="true"] ~ span {
+  display: block;
+}

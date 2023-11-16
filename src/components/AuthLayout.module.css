@@ -1,7 +1,5 @@
 .container {
     display: flex;
     align-items: center;
-    height: 4rem;
-    background-color: white;
-    padding-inline: 2rem;
+    justify-content: center;
 }
