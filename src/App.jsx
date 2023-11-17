@@ -4,8 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import ProductDetailPage from './pages/ProductDetail';
 import RootLayout from './components/RootLayout';
 import SignupPage from './pages/SignupPage';
-import LoginPage from './pages/LoginPage';
 import AuthLayout from './components/AuthLayout';
+import LoginPage from './pages/Login';
 
 const queryClient = new QueryClient();
 

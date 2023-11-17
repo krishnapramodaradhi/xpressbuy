@@ -1,8 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './Signup.module.css';
+import { useNavigate } from 'react-router-dom';
 import Input from '../components/common/Input';
 import { useEffect, useState } from 'react';
-import {db} from '../config/db'
+import { db } from '../config/db';
+import Spinner from '../components/common/Spinner';
+import AuthContainer from '../components/AuthContainer';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const SignupPage = () => {
     confirmPassword: '',
   });
   const [formError, setFormError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const inputs = [
     {
       id: 1,
@@ -57,8 +59,8 @@ const SignupPage = () => {
       label: 'Confirm Password',
       required: true,
       pattern: values.password,
-      errorMessage: 'Passwords do not match'
-    }
+      errorMessage: 'Passwords do not match',
+    },
   ];
 
   const inputChangeHandler = (e) => {
@@ -66,6 +68,7 @@ const SignupPage = () => {
   };
 
   const formSubmitHandler = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const result = await db.auth.signUp({
       email: values.email,
@@ -73,49 +76,50 @@ const SignupPage = () => {
       options: {
         data: {
           firstname: values.firstname,
-          lastname: values.lastname
-        }
-      }
-    })
+          lastname: values.lastname,
+        },
+      },
+    });
+    if (result) {
+      setLoading(false);
+    }
     if (result.error && result.error.status === 400) {
       setFormError(result.error.message);
       return;
     }
     navigate('/');
-  }
+  };
 
   useEffect(() => {
     setTimeout(() => {
-      setFormError(null)
-    }, 5000);
-  }, [formError])
+      setFormError(null);
+    }, 10000);
+  }, [formError]);
+
+  if (loading) return <Spinner />;
   return (
-    <div className={styles.container}>
-      <h1>Signup</h1>
-      {formError && <span>{formError}</span>}
-      <form onSubmit={formSubmitHandler}>
-        {inputs.map((input) => (
-          <Input
-            key={input.id}
-            type={input.type}
-            name={input.name}
-            id={input.name}
-            label={input.label}
-            value={values[input.name]}
-            required={input.required}
-            pattern={input.pattern}
-            onChange={inputChangeHandler}
-            errorMessage={input.errorMessage}
-          />
-        ))}
-        <div>
-          <button>Submit</button>
-          <p>
-            Already have an account? <Link to='/login'>Login</Link> instead
-          </p>
-        </div>
-      </form>
-    </div>
+    <AuthContainer
+      title='Signup'
+      formSubmitHandler={formSubmitHandler}
+      error={formError}
+      redirectMessage='Already have an account?'
+      href='login'
+    >
+      {inputs.map((input) => (
+        <Input
+          key={input.id}
+          type={input.type}
+          name={input.name}
+          id={input.name}
+          label={input.label}
+          value={values[input.name]}
+          required={input.required}
+          pattern={input.pattern}
+          onChange={inputChangeHandler}
+          errorMessage={input.errorMessage}
+        />
+      ))}
+    </AuthContainer>
   );
 };
 

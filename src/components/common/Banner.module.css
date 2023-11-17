@@ -1,0 +1,10 @@
+.banner {
+  color: red;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+  display: block;
+  border: 1px solid var(--accent-clr);
+  padding: 0.5rem;
+  background-color: var(--background-accent-clr);
+}

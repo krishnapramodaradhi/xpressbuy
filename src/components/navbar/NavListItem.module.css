@@ -1,0 +1,38 @@
+.container {
+  position: relative;
+}
+
+.container > a > svg {
+  pointer-events: none;
+}
+
+.list {
+  background-color: white;
+  position: absolute;
+  border-radius: 5px;
+  box-shadow: 0 2px 15px #00000043;
+  translate: -90%;
+  width: max-content;
+  padding: 0.5rem 0.75rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  display: none;
+}
+
+.list > li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.list > li > svg {
+  width: 1rem;
+}
+
+.list[data-open='true'] {
+  display: flex;
+}

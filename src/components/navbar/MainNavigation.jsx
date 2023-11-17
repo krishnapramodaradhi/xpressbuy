@@ -10,13 +10,20 @@ import { db } from '../../config/db';
 const MainNavigation = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    db.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        setUser(session.user)
-      } else if (event === 'SIGNED_OUT') {
+    const getSession = async () => {
+      const { data } = await db.auth.getSession();
+      setUser(data?.session?.user);
+    }
+    getSession();
+    const { data } = db.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
         setUser(null);
       }
     })
+
+    return () => {
+      data.subscription.unsubscribe();
+    }
   }, [])
   return (
     <nav className={styles.navbar}>

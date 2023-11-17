@@ -40,11 +40,19 @@
 
 .navbar > ul {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     place-items: end;
     gap: 1rem;
 }
 
 .navbar > ul svg {
-    font-size: 1.25rem;;
+    font-size: 1.25rem;
+}
+
+.navbar button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    padding: 0;
 }
