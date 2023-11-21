@@ -2,7 +2,7 @@ import Input from '../components/common/Input';
 import AuthContainer from '../components/AuthContainer';
 import { useEffect, useState } from 'react';
 import { db } from '../config/db';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Spinner from '../components/common/Spinner';
 
 const LoginPage = () => {
@@ -11,8 +11,18 @@ const LoginPage = () => {
     password: '',
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState(null);
+
+  useEffect(() => {
+    if (location.state?.message) {
+      setFormError(location.state.message);
+    }
+    setTimeout(() => {
+      setFormError(null);
+    }, 10000);
+  }, []);
 
   const inputChangeHandler = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -34,15 +44,14 @@ const LoginPage = () => {
       setFormError(result.error.message);
       return;
     }
-
-    navigate('/');
+    localStorage.setItem('token', result.data.session.access_token)
+    localStorage.setItem('userId', result.data.session.user.id)
+    if(location.state?.pathname) {
+      navigate(location.state?.pathname, { replace: true })
+    } else {
+      navigate('/', { replace: true });
+    }
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setFormError(null);
-    }, 10000);
-  }, []);
 
   if (loading) return <Spinner />;
   return (

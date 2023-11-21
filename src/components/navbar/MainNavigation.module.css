@@ -1,6 +1,6 @@
 .navbar {
     display: grid;
-    grid-template-columns: 200px 1fr 100px;
+    grid-template-columns: 200px 1fr 150px;
     align-items: center;
     height: 4rem;
     background-color: white;

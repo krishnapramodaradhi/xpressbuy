@@ -8,16 +8,13 @@ import { useEffect, useState } from 'react';
 import { db } from '../../config/db';
 
 const MainNavigation = () => {
-  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
   useEffect(() => {
-    const getSession = async () => {
-      const { data } = await db.auth.getSession();
-      setUser(data?.session?.user);
-    }
-    getSession();
-    const { data } = db.auth.onAuthStateChange((event, session) => {
+    const token = localStorage.getItem('token')
+    setSession(token);
+    const { data } = db.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_OUT') {
-        setUser(null);
+        setSession(null);
       }
     })
 
@@ -34,7 +31,7 @@ const MainNavigation = () => {
         <FaMagnifyingGlass />
         <input type='text' placeholder='Search for Products' />
       </div>
-      <NavList user={user} />
+      <NavList session={session} />
     </nav>
   );
 };

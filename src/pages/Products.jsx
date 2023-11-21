@@ -6,9 +6,10 @@ import ProductsGrid from '../components/products/ProductsGrid';
 import { useEffect, useState } from 'react';
 import CategoryFilter from '../components/products/CategoryFilter';
 import { useSearchParams } from 'react-router-dom';
+import Spinner from '../components/common/Spinner';
 
 const ProductsPage = () => {
-  const [ searchParams, setSearchParams ] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const { isPending: loadingProducts, data: fetchedProducts } = useQuery({
     queryKey: ['products'],
@@ -40,42 +41,47 @@ const ProductsPage = () => {
       (p) => p.category.categoryName === category
     );
     setFilteredProducts([...filteredProducts, ...filteredProductsByCategory]);
-  }
+  };
 
   useEffect(() => {
     const categories = searchParams.get('categories');
     if (categories && fetchedProducts) {
       setFilteredProducts(
-        fetchedProducts.filter(p => categories.split(',').includes(p.category.categoryName))
-      )
+        fetchedProducts.filter((p) =>
+          categories.split(',').includes(p.category.categoryName)
+        )
+      );
     }
-  }, [fetchedProducts])
+  }, [fetchedProducts]);
 
   const categorySelectHandler = (category) => {
     setSearchParams((prevParams) => {
       let categories = prevParams.get('categories');
       if (!categories) {
-        prevParams.set('categories', category)
-        setFilteredProductsByCategory(category)
+        prevParams.set('categories', category);
+        setFilteredProductsByCategory(category);
         return prevParams;
       } else if (categories && categories.includes(category)) {
         return prevParams;
       } else {
-        setFilteredProductsByCategory(category)
-        categories = categories + ',' + category
+        setFilteredProductsByCategory(category);
+        categories = categories + ',' + category;
         prevParams.set('categories', categories);
-        return prevParams
+        return prevParams;
       }
-    })
+    });
   };
 
   const removeCategoryFilterHandler = (category) => {
-    setSearchParams(prevParams => {
+    setSearchParams((prevParams) => {
       let categories = searchParams.get('categories');
-      categories = categories.split(',').filter(cat => cat !== category).join(',')
+      categories = categories
+        .split(',')
+        .filter((cat) => cat !== category)
+        .join(',');
       prevParams.set('categories', categories);
       return prevParams;
-    })
+    });
     setFilteredProducts(
       filteredProducts.filter((p) => p.category.categoryName !== category)
     );

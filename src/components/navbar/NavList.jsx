@@ -6,12 +6,14 @@ import {
 } from 'react-icons/fa6';
 import NavListItem from './NavListItem';
 import { db } from '../../config/db';
+import { useNavigate } from 'react-router-dom';
 
-const NavList = ({ user }) => {
+const NavList = ({ session }) => {
+  const navigate = useNavigate();
   const navListItems = [
     {
-      href: user ? '/profile' : '/login',
-      title: user ? 'Profile' : 'Login',
+      href: session ? '/profile' : '/login',
+      title: session ? 'Profile' : 'Login',
       Icon: FaUser,
     },
     {
@@ -33,6 +35,9 @@ const NavList = ({ user }) => {
 
   const logoutHandler = async () => {
     await db.auth.signOut();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    navigate('/', {replace: true});
   };
   return (
     <ul role='list'>
@@ -42,7 +47,7 @@ const NavList = ({ user }) => {
           href={listItem.href}
           title={listItem.title}
           tag={listItem.tag}
-          user={user}
+          session={session}
           logoutHandler={logoutHandler}
         >
           <listItem.Icon />

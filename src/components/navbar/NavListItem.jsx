@@ -29,7 +29,7 @@ const NavListItem = (props) => {
       )}
       {props.title === 'More Options' && (
           <ul data-open={toggleMenu.toString()} role='list' className={styles.list}>
-          {!props.user && (
+          {!props.session && (
             <li>
               <FaUserPlus />
               <Link to='/signup'>Signup</Link>
@@ -37,9 +37,9 @@ const NavListItem = (props) => {
           )}
           <li>
             <FaBoxesPacking />
-            <Link to='/order'>My Orders</Link>
+            <Link to='/orders'>My Orders</Link>
           </li>
-          {props.user && (
+          {props.session && (
             <li onClick={props.logoutHandler}>
               <FaArrowRightFromBracket />
               <span>Logout</span>

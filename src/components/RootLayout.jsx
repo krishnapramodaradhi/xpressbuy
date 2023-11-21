@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import MainNavigation from './navbar/MainNavigation';
+import { Suspense } from 'react';
+import Spinner from './common/Spinner';
 
 const RootLayout = () => {
   return (
@@ -8,7 +10,9 @@ const RootLayout = () => {
         <MainNavigation />
       </header>
       <main>
-        <Outlet />
+        <Suspense fallback={<Spinner />}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   );
