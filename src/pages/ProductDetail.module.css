@@ -67,15 +67,3 @@
   background-color: white;
   color: var(--accent-clr);
 }
-
-.quantity {
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.quantity > label {
-  font-weight: 600;
-  font-size: 14px;
-}

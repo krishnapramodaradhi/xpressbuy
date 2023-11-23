@@ -1,14 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../config/db';
 import { range } from '../utils';
 import styles from './ProductDetail.module.css';
 import Spinner from '../components/common/Spinner';
 import { useRef } from 'react';
+import QuantitySelect from '../components/QuantitySelect';
 
 const ProductDetailPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const quantityRef = useRef();
   const { isPending, data: product } = useQuery({
     queryKey: ['products', params.productId],
@@ -22,32 +24,55 @@ const ProductDetailPage = () => {
     },
   });
 
+  const queryClient = useQueryClient();
+  const addToCart = useMutation({
+    mutationFn: (cartItem) => {
+      return db.from('cartItems').insert(cartItem)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['cart']
+      })
+    },
+  })
+
+  const updateCart = useMutation({
+    mutationFn: ({ updatedColumns, productId }) => {
+      return db
+      .from('cartItems')
+      .update(updatedColumns)
+      .eq('productId', productId);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['cart'] })
+    }
+  })
+
   const addToCartHandler = async () => {
     const quantity = +quantityRef.current.value;
     const userId = localStorage.getItem('userId');
-    const productId = params.productId
-    console.log(quantity, userId, productId)
+    const productId = params.productId;
     const { data } = await db
       .from('cartItems')
       .select()
       .eq('productId', productId);
     if (data.length) {
-      const result = await db
-        .from('cartItems')
-        .update({
-          quantity: data[0].quantity + quantity,
-          totalPrice: data[0].totalPrice + (product[0].price * quantity),
-        }).and;
-        console.log(result)
+      const updatedColumns = {
+        quantity: data[0].quantity + quantity,
+        totalPrice: data[0].totalPrice + product[0].price * quantity,
+      }
+      updateCart.mutate({ updatedColumns, productId })
+      navigate('/cart');
       return;
     }
     const cartItem = {
-      userId: localStorage.getItem('userId'),
-      productId: params.productId,
-      quantity: +quantityRef.current.value,
-      totalPrice: product[0].price * quantityRef.current.value,
+      user_id: userId,
+      productId,
+      quantity,
+      totalPrice: product[0].price * quantity,
     };
-    const result = await db.from('cartItems').insert(cartItem);
+    addToCart.mutate(cartItem)
+    navigate('/cart');
   };
 
   if (isPending) return <Spinner />;
@@ -62,16 +87,13 @@ const ProductDetailPage = () => {
         <div>
           <h1>{product[0].title}</h1>
           <p>${product[0].price}</p>
-          <div className={styles.quantity}>
-            <label htmlFor='quantity'>Quantity</label>
-            <select name='quantity' id='quantity' ref={quantityRef}>
-              {range(1, quantity).map((num) => (
-                <option value={num} key={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
-          </div>
+          <QuantitySelect
+            id='quantity'
+            name='quantity'
+            label='Quantity'
+            ref={quantityRef}
+            maxRange={quantity}
+          />
           <p>{product[0].shortDescription}</p>
         </div>
         <div>

@@ -17,18 +17,25 @@ const NavListItem = (props) => {
     <li className={styles.container}>
       {!props.tag ? (
         <Link to={props.href} title={props.title} onClick={props.onClick}>
-          {props.children}
+          <span>{props.children}</span>
+          {props.title === 'Shopping Cart' && !!props.cartCount && (
+            <span id='cart'>{props.cartCount}</span>
+          )}
+          {props.title === 'Wishlist' && !!props.wishlistCount && (
+            <span id='wishlist'>2</span>
+          )}
         </Link>
       ) : (
-        <button
-          title={props.title}
-          onClick={toggleMenuHandler}
-        >
+        <button title={props.title} onClick={toggleMenuHandler}>
           {props.children}
         </button>
       )}
       {props.title === 'More Options' && (
-          <ul data-open={toggleMenu.toString()} role='list' className={styles.list}>
+        <ul
+          data-open={toggleMenu.toString()}
+          role='list'
+          className={styles.list}
+        >
           {!props.session && (
             <li>
               <FaUserPlus />

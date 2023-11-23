@@ -1,9 +1,16 @@
-.container {
-  position: relative;
+.container > a > span:first-child {
+  pointer-events: none;
 }
 
-.container > a > svg {
-  pointer-events: none;
+.container > a > span[id="wishlist"],
+.container > a > span[id="cart"] {
+    position: absolute;
+    transform: translate(-10%, -50%);
+    background-color: var(--accent-clr);
+    color: white;
+    padding-inline: .35rem;
+    border-radius: 50%;
+    font-size: 12px;
 }
 
 .list {

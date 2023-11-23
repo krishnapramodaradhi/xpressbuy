@@ -8,7 +8,7 @@ import NavListItem from './NavListItem';
 import { db } from '../../config/db';
 import { useNavigate } from 'react-router-dom';
 
-const NavList = ({ session }) => {
+const NavList = ({ session, cartCount }) => {
   const navigate = useNavigate();
   const navListItems = [
     {
@@ -48,6 +48,7 @@ const NavList = ({ session }) => {
           title={listItem.title}
           tag={listItem.tag}
           session={session}
+          cartCount={cartCount}
           logoutHandler={logoutHandler}
         >
           <listItem.Icon />

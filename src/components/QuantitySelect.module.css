@@ -1,0 +1,10 @@
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.quantity > label {
+  font-weight: 600;
+  font-size: 14px;
+}

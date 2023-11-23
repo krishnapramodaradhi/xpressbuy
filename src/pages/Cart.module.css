@@ -1,0 +1,121 @@
+.container,
+h1 {
+  max-width: 1400px;
+  margin-inline: auto;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+  place-content: start;
+}
+
+.cartItemsContainer,
+.checkoutContainer {
+  border-radius: 5px;
+  background-color: white;
+  padding: 1rem;
+  margin-block: 1rem;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.cartItem:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.cartItem > div:first-child {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.cartItem > div:first-child > img {
+  aspect-ratio: 1 / 1;
+}
+
+.cartItem > div:last-child {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cartItem > div:last-child > h3 {
+  margin-top: 0;
+}
+
+.cartItem > div:last-child > p:first-of-type {
+  margin-top: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+
+.cartItem > div:last-child > p:last-of-type {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.cartItem > div:last-child > div {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cartItem > div:last-child > div > span {
+  border: 1px solid var(--accent-clr);
+  font-size: 12px;
+  padding: 0 0.25rem;
+  color: var(--accent-clr);
+  font-weight: 600;
+}
+
+.cartItem > div:last-child > button {
+  margin-top: 1rem;
+  align-self: flex-start;
+  background-color: transparent;
+  color: var(--accent-clr);
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.checkoutContainer {
+  height: fit-content;
+}
+
+.checkoutContainer > p {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.checkoutContainer > a {
+  display: block;
+  margin-top: 1rem;
+  width: 100%;
+  background-color: var(--accent-clr);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding-block: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
