@@ -1,0 +1,30 @@
+{{ define "head" }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="css/global.css" rel="stylesheet">
+{{ end }}
+
+{{ define "header" }}
+<header>
+    <nav>
+        <a href="/">xpressbuy</a>
+        <div>
+            <input type="text" name="search" value="search">
+        </div>
+        <ul role="list">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/products">Products</a>
+            </li>
+            <li>
+                <a href="/wishlist">Wishlist</a>
+            </li>
+            <li>
+                <a href="/cart">Cart</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+{{ end }}
